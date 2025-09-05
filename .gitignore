@@ -1,0 +1,19 @@
+# Node
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Env
+.env
+
+# Dist / build
+dist/
+build/
+
+# Prisma
+prisma/dev.db
+prisma/dev.db-journal
+
+# Logs
+*.log
+logs/
