@@ -1,0 +1,56 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["prismaSchemaFolder", "views"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum BorrowStatus {
+  BORROWED
+  RETURNED
+  OVERDUE
+}
+
+model Book {
+  id                Int            @id @default(autoincrement())
+  title             String
+  author            String
+  isbn              String         @unique
+  totalQuantity     Int            @map("total_quantity")
+  availableQuantity Int            @map("available_quantity")
+  shelfLocation     String         @map("shelf_location")
+  isDeleted         Boolean        @map("is_deleted")
+  BookBorrowers     BookBorrower[]
+}
+
+model Borrower {
+  id           Int      @id @default(autoincrement())
+  name         String
+  email        String   @unique
+  registeredAt DateTime @default(now()) @map("registered_at")
+  isDeleted    Boolean  @map("is_deleted")
+
+  BookBorrowers BookBorrower[]
+}
+
+model BookBorrower {
+  id           Int          @id @default(autoincrement())
+  bookId       Int          @map("book_id")
+  borrowerId   Int          @map("borrower_id")
+  dateBorrowed DateTime     @default(now()) @map("date_borrowed")
+  dueDate      DateTime     @map("due_date")
+  dateReturned DateTime?    @map("date_returned")
+  status       BorrowStatus @default(BORROWED)
+  isDeleted    Boolean      @map("is_deleted")
+
+  book     Book     @relation(fields: [bookId], references: [id])
+  borrower Borrower @relation(fields: [borrowerId], references: [id])
+}
