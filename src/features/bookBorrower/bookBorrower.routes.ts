@@ -13,11 +13,13 @@ import {
   updateBookBorrowerSchema,
 } from "./bookBorrower.dto";
 import { getAllOverdueBorrowingsController } from "../borrower/borrower.controller";
+import { testLimiter } from "../../utils/limiter";
 
 const router = createAsyncRouter();
 
 router.post(
   "",
+  testLimiter,
   validateRequest(createBookBorrowerSchema),
   createBookBorrowerController
 );
@@ -31,7 +33,7 @@ router.put(
   updateBookBorrowerController
 );
 
-router.put("/return-book/:id", returnBookController);
+router.put("/return-book/:id", testLimiter, returnBookController);
 router.delete("/:id", deleteBookBorrowerController);
 
 export default router;

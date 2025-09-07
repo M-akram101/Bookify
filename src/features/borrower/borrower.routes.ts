@@ -8,6 +8,7 @@ import {
 } from "./borrower.controller";
 import { validateRequest } from "../../middleware/validateRequest";
 import { createBorrowerSchema, updateBorrowerSchema } from "./borrower.dto";
+import { testLimiter } from "../../utils/limiter";
 
 const router = createAsyncRouter();
 
