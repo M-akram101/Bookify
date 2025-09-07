@@ -23,7 +23,7 @@ export const createBook = async (bookDto: BookDto) => {
 
 export const getAllBooks = async () => {
   try {
-    return await prisma.book.findMany();
+    return await prisma.book.findMany({ where: { isDeleted: false } });
   } catch (err: any) {
     const error: ApiError = {
       ...err,
@@ -38,6 +38,30 @@ export const getBookById = async (id: number) => {
     return await prisma.book.findUnique({ where: { id, isDeleted: false } });
   } catch (err: any) {
     const error: ApiError = { ...err, message: `Failed to get a book` };
+    throw error;
+  }
+};
+
+export const getBookByQuery = async (
+  title?: string,
+  author?: string,
+  isbn?: string
+) => {
+  try {
+    if (!title && !author && !isbn) {
+      throw { message: "You must provide either title, author, or isbn" };
+    }
+
+    return await prisma.book.findMany({
+      where: {
+        isDeleted: false,
+        ...(title && { title }),
+        ...(author && { author }),
+        ...(isbn && { isbn }),
+      },
+    });
+  } catch (err: any) {
+    const error: ApiError = { ...err, message: `Failed to get book(s)` };
     throw error;
   }
 };

@@ -22,8 +22,8 @@ const setupMiddleware = () => {
 
 const setupRoutes = () => {
   application.use("/api/books", bookRoutes);
-  application.use("/api/borrower", borrowerRoutes);
-  application.use("/api/bookBorrower", bookBorrowerRoutes);
+  application.use("/api/borrowers", borrowerRoutes);
+  application.use("/api/book-borrowers", bookBorrowerRoutes);
 };
 
 const setupErrorHandling = () => {

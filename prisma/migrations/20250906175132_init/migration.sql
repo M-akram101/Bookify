@@ -10,7 +10,7 @@ CREATE TABLE "public"."Book" (
     "total_quantity" INTEGER NOT NULL,
     "available_quantity" INTEGER NOT NULL,
     "shelf_location" TEXT NOT NULL,
-    "is_deleted" BOOLEAN NOT NULL,
+    "is_deleted" BOOLEAN NOT NULL DEFAULT false,
 
     CONSTRAINT "Book_pkey" PRIMARY KEY ("id")
 );
@@ -21,7 +21,7 @@ CREATE TABLE "public"."Borrower" (
     "name" TEXT NOT NULL,
     "email" TEXT NOT NULL,
     "registered_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "is_deleted" BOOLEAN NOT NULL,
+    "is_deleted" BOOLEAN NOT NULL DEFAULT false,
 
     CONSTRAINT "Borrower_pkey" PRIMARY KEY ("id")
 );
@@ -35,7 +35,7 @@ CREATE TABLE "public"."BookBorrower" (
     "due_date" TIMESTAMP(3) NOT NULL,
     "date_returned" TIMESTAMP(3),
     "status" "public"."BorrowStatus" NOT NULL DEFAULT 'BORROWED',
-    "is_deleted" BOOLEAN NOT NULL,
+    "is_deleted" BOOLEAN NOT NULL DEFAULT false,
 
     CONSTRAINT "BookBorrower_pkey" PRIMARY KEY ("id")
 );
