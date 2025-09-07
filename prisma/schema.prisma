@@ -29,6 +29,8 @@ model Book {
   shelfLocation     String         @map("shelf_location")
   isDeleted         Boolean        @default(false) @map("is_deleted")
   BookBorrowers     BookBorrower[]
+
+  @@index([author])
 }
 
 model Borrower {
@@ -53,4 +55,7 @@ model BookBorrower {
 
   book     Book     @relation(fields: [bookId], references: [id])
   borrower Borrower @relation(fields: [borrowerId], references: [id])
+
+  @@index([borrowerId])
+  @@index([status])
 }
