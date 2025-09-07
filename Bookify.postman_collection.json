@@ -1,0 +1,484 @@
+{
+	"info": {
+		"_postman_id": "81a6a6ae-485c-45ef-ab79-0a3ca3fefdf6",
+		"name": "Bookify",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "38511182",
+		"_collection_link": "https://nimbusalt.postman.co/workspace/NimbusAlt-Workspace~8fda6ea6-35f2-47d6-8337-53702d8f2693/collection/38511182-81a6a6ae-485c-45ef-ab79-0a3ca3fefdf6?action=share&source=collection_link&creator=38511182"
+	},
+	"item": [
+		{
+			"name": "Book",
+			"item": [
+				{
+					"name": "create-a-book",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"title\": \"The Legend\",\n  \"author\": \"Martin\",\n  \"isbn\": \"97801339570512\",\n  \"totalQuantity\": 10,\n  \"availableQuantity\": 10,\n  \"shelfLocation\": \"Aisle 1, Shelf B\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api/books",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"books"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get-all",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/api/books",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"books"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get-by-id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/api/books/1",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"books",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get-by-author",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/api/books/1",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"books",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get-by-isbn",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/api/books?isbn=9780135957059",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"books"
+							],
+							"query": [
+								{
+									"key": "isbn",
+									"value": "9780135957059"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get-by-author",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/api/books?author=Andrew Hunt",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"books"
+							],
+							"query": [
+								{
+									"key": "author",
+									"value": "Andrew Hunt"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update-Book",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"title\": \"The Pragmatic Programmer\",\n  \"author\": \"Andrew Hunt\",\n  \"isbn\": \"9780135957053\",\n  \"totalQuantity\": 10,\n  \"availableQuantity\": 10,\n  \"shelfLocation\": \"Aisle 2, Shelf B\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api/books/1",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"books",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete-book",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/api/books/2",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"books",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Borrower",
+			"item": [
+				{
+					"name": "Create-Borrower",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"John Doe\",\n  \"email\": \"johndoe@example.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api/borrowers",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"borrowers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get-all",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/api/borrowers",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"borrowers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get-by-id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/api/borrowers/1",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"borrowers",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update-borrower",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"John Doe\",\n  \"email\": \"johndoe@example.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api/borrowers",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"borrowers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete-borrower",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/api/borrowers",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"borrowers"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "BookBorrower",
+			"item": [
+				{
+					"name": "create-book-borrower",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"bookId\": 3,\n  \"borrowerId\": 1,\n  \"dueDate\": \"2025-09-20T00:00:00.000Z\",\n  \"status\": \"BORROWED\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api/book-borrowers",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"book-borrowers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get-all",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/api/book-borrowers/",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"book-borrowers",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get-all overdue-borrows",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/api/book-borrowers/overdue",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"book-borrowers",
+								"overdue"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get-bookborrowers-by-id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/api/book-borrowers/1",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"book-borrowers",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update-book-borrower",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"bookId\": 3,\n  \"borrowerId\": 1,\n  \"dueDate\": \"2025-08-20T00:00:00.000Z\",\n  \"status\": \"BORROWED\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api/book-borrowers/4",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"book-borrowers",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "return-book",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/api/book-borrowers/return-book/1",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"book-borrowers",
+								"return-book",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete-book-borrower",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/api/book-borrowers/1",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"book-borrowers",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
