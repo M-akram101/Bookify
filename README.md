@@ -5,12 +5,16 @@ Bookify is a library management system to simplify the process between books and
 ## Technologies Used:
 
 Nodejs
+Typescript
 Express
 Prisma
 PostgreSQL
 RestfulAPIs
 Github
 Draw.io
+Architecture style: Modular monolith
+Postman API Documentation link: https://documenter.getpostman.com/view/38511182/2sB3HkrLjr
+You will find also a photo of drawio design for db, and a file with all endpoints (collection in postman ) to test routes.
 
 ## installation
 

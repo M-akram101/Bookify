@@ -18,3 +18,4 @@ prisma/dev.db-journal
 *.log
 logs/
 /src/generated/prisma
+.migrations/
