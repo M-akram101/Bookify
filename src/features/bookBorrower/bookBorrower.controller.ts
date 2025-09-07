@@ -69,21 +69,6 @@ export const getBookBorrowerByIdController = async (
 
   success(res, borrowings);
 };
-// export const getBookBorrowerByIdController = async (
-//   req: Request,
-//   res: Response,
-//   next: NextFunction
-// ) => {
-//   const { borrowerId } = req.params;
-
-//   const bookBorrowers = await getBorrowingsByBorrowerId(Number(borrowerId));
-//   if (!bookBorrowers || bookBorrowers.length === 0) {
-//     notFound(res, "No borrowings found for this borrower");
-//     return;
-//   }
-
-//   success(res, bookBorrowers);
-// };
 
 export const updateBookBorrowerController = async (
   req: Request,
