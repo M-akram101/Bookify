@@ -21,13 +21,13 @@ enum BorrowStatus {
 
 model Book {
   id                Int            @id @default(autoincrement())
-  title             String
+  title             String         @unique
   author            String
   isbn              String         @unique
   totalQuantity     Int            @map("total_quantity")
   availableQuantity Int            @map("available_quantity")
   shelfLocation     String         @map("shelf_location")
-  isDeleted         Boolean        @map("is_deleted")
+  isDeleted         Boolean        @default(false) @map("is_deleted")
   BookBorrowers     BookBorrower[]
 }
 
@@ -36,7 +36,7 @@ model Borrower {
   name         String
   email        String   @unique
   registeredAt DateTime @default(now()) @map("registered_at")
-  isDeleted    Boolean  @map("is_deleted")
+  isDeleted    Boolean  @default(false) @map("is_deleted")
 
   BookBorrowers BookBorrower[]
 }
@@ -49,7 +49,7 @@ model BookBorrower {
   dueDate      DateTime     @map("due_date")
   dateReturned DateTime?    @map("date_returned")
   status       BorrowStatus @default(BORROWED)
-  isDeleted    Boolean      @map("is_deleted")
+  isDeleted    Boolean      @default(false) @map("is_deleted")
 
   book     Book     @relation(fields: [bookId], references: [id])
   borrower Borrower @relation(fields: [borrowerId], references: [id])

@@ -2,9 +2,10 @@ import { Request, Response, NextFunction } from "express";
 import {
   createBookBorrower,
   getAllBookBorrowers,
-  getBookBorrowerById,
   updateBookBorrower,
   deleteBookBorrower,
+  returnBook,
+  getBorrowingsByBorrowerId,
 } from "./bookBorrower.service";
 import { BookBorrowerDto } from "./bookBorrower.dto";
 import {
@@ -14,6 +15,7 @@ import {
   successCreation,
   successNoContent,
 } from "../../utils/httpResponses";
+import { getBookById, updateBook } from "../book/book.service";
 
 export const createBookBorrowerController = async (
   req: Request,
@@ -23,7 +25,24 @@ export const createBookBorrowerController = async (
   const bookBorrowerData: BookBorrowerDto = {
     ...req.body,
   };
+
+  const bookData = await getBookById(bookBorrowerData.bookId);
+  // checks if there are available copies of the book to borrow
+  if (!bookData) {
+    notFound(res, "Book not found");
+    return;
+  }
+  if (bookData?.availableQuantity < 1) {
+    badRequest(res, "No available copies of the book to borrow.");
+    return;
+  }
+
   const bookBorrower = await createBookBorrower(bookBorrowerData);
+
+  bookData.availableQuantity = bookData.availableQuantity - 1;
+
+  await updateBook(bookData.id, bookData);
+
   successCreation(res, bookBorrower);
 };
 
@@ -35,21 +54,36 @@ export const getAllBookBorrowersController = async (
   const bookBorrowers = await getAllBookBorrowers();
   success(res, bookBorrowers);
 };
-
 export const getBookBorrowerByIdController = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
-  const { id } = req.params;
+  const { borrowerId } = req.params;
 
-  const bookBorrower = await getBookBorrowerById(Number(id));
-  if (!bookBorrower) {
-    notFound(res, "BookBorrower not found");
+  const borrowings = await getBorrowingsByBorrowerId(Number(borrowerId));
+  if (!borrowings || borrowings.length === 0) {
+    notFound(res, "No active borrowings found for this borrower");
     return;
   }
-  success(res, bookBorrower);
+
+  success(res, borrowings);
 };
+// export const getBookBorrowerByIdController = async (
+//   req: Request,
+//   res: Response,
+//   next: NextFunction
+// ) => {
+//   const { borrowerId } = req.params;
+
+//   const bookBorrowers = await getBorrowingsByBorrowerId(Number(borrowerId));
+//   if (!bookBorrowers || bookBorrowers.length === 0) {
+//     notFound(res, "No borrowings found for this borrower");
+//     return;
+//   }
+
+//   success(res, bookBorrowers);
+// };
 
 export const updateBookBorrowerController = async (
   req: Request,
@@ -67,6 +101,32 @@ export const updateBookBorrowerController = async (
     notFound(res, "BookBorrower Session not found");
     return;
   }
+  success(res, bookBorrowerData);
+};
+
+export const returnBookController = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const { id } = req.params;
+
+  const bookBorrowerData = await returnBook(Number(id));
+
+  if (!bookBorrowerData) {
+    notFound(res, "BookBorrower session not found");
+    return;
+  }
+
+  // get book details and increment available quantity
+  const bookData = await getBookById(bookBorrowerData.bookId);
+  if (bookData) {
+    await updateBook(bookData.id, {
+      ...bookData,
+      availableQuantity: bookData.availableQuantity + 1,
+    });
+  }
+
   success(res, bookBorrowerData);
 };
 

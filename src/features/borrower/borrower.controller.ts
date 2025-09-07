@@ -14,6 +14,7 @@ import {
   successCreation,
   successNoContent,
 } from "../../utils/httpResponses";
+import { getAllOverdueBorrowings } from "../bookBorrower/bookBorrower.service";
 
 export const createBorrowerController = async (
   req: Request,
@@ -34,6 +35,24 @@ export const getAllBorrowersController = async (
 ) => {
   const borrowers = await getAllBorrowers();
   success(res, borrowers);
+};
+
+export const getAllOverdueBorrowingsController = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const overdueBorrowings = await getAllOverdueBorrowings();
+
+    if (!overdueBorrowings || overdueBorrowings.length === 0) {
+      return notFound(res, "No overdue borrowings found");
+    }
+
+    success(res, overdueBorrowings);
+  } catch (err) {
+    next(err); // pass error to centralized error handler
+  }
 };
 
 export const getBorrowerByIdController = async (

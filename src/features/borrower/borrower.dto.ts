@@ -1,30 +1,16 @@
 import Joi from "joi";
-import { BorrowStatus } from "@prisma/client";
 
 export interface BorrowerDto {
-  bookId: number;
-  borrowerId: number;
-  dueDate: Date;
-  dateReturned?: Date;
-  status: BorrowStatus;
+  name: string;
+  email: string;
 }
 
 export const createBorrowerSchema = Joi.object<BorrowerDto>({
-  bookId: Joi.number().required(),
-  borrowerId: Joi.number().required(),
-  dueDate: Joi.date().required(),
-  dateReturned: Joi.date().optional(),
-  status: Joi.string()
-    .valid(...Object.values(Status))
-    .required(),
+  name: Joi.string().required(),
+  email: Joi.string().email().required(),
 });
 
 export const updateBorrowerSchema = Joi.object<BorrowerDto>({
-  bookId: Joi.number().required(),
-  borrowerId: Joi.number().required(),
-  dueDate: Joi.date().required(),
-  dateReturned: Joi.date().optional(),
-  status: Joi.string()
-    .valid(...Object.values(Status))
-    .required(),
+  name: Joi.string().optional(),
+  email: Joi.string().email().required(),
 });

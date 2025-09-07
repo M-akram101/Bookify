@@ -5,6 +5,7 @@ import {
   getBookById,
   updateBook,
   deleteBook,
+  getBookByQuery,
 } from "./book.service";
 import { BookDto } from "./book.dto";
 import {
@@ -14,6 +15,7 @@ import {
   successCreation,
   successNoContent,
 } from "../../utils/httpResponses";
+import { getAllOverdueBorrowings } from "../bookBorrower/bookBorrower.service";
 
 export const createBookController = async (
   req: Request,
@@ -49,6 +51,36 @@ export const getBookByIdController = async (
     return;
   }
   success(res, book);
+};
+
+export const getBookByQueryController = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { title, author, isbn } = req.query;
+
+    if (!title && !author && !isbn) {
+      badRequest(res, "You must provide either title, author, or isbn");
+      return;
+    }
+
+    const books = await getBookByQuery(
+      title as string,
+      author as string,
+      isbn as string
+    );
+
+    if (!books || books.length === 0) {
+      notFound(res, "No book found matching the query");
+      return;
+    }
+
+    success(res, books);
+  } catch (error) {
+    next(error);
+  }
 };
 
 export const updateBookController = async (

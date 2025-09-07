@@ -6,11 +6,8 @@ export const createBorrower = async (borrowerDto: BorrowerDto) => {
   try {
     const borrower = await prisma.borrower.create({
       data: {
-        bookId: borrowerDto.bookId,
-        borrowerId: borrowerDto.borrowerId,
-        dueDate: borrowerDto.dueDate,
-        dateReturned: borrowerDto.dateReturned,
-        status: borrowerDto.status,
+        name: borrowerDto.name,
+        email: borrowerDto.email,
       },
     });
     return borrower;
@@ -51,11 +48,8 @@ export const updateBorrower = async (id: number, borrowerDto: BorrowerDto) => {
     const borrower = await prisma.borrower.update({
       where: { id: id, isDeleted: false },
       data: {
-        bookId: borrowerDto.bookId,
-        borrowerId: borrowerDto.borrowerId,
-        dueDate: borrowerDto.dueDate,
-        dateReturned: borrowerDto.dateReturned,
-        status: borrowerDto.status,
+        name: borrowerDto.name,
+        email: borrowerDto.email,
       },
     });
     return borrower;

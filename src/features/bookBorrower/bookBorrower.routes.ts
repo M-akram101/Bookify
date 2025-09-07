@@ -5,12 +5,14 @@ import {
   getBookBorrowerByIdController,
   updateBookBorrowerController,
   deleteBookBorrowerController,
+  returnBookController,
 } from "./bookBorrower.controller";
 import { validateRequest } from "../../middleware/validateRequest";
 import {
   createBookBorrowerSchema,
   updateBookBorrowerSchema,
 } from "./bookBorrower.dto";
+import { getAllOverdueBorrowingsController } from "../borrower/borrower.controller";
 
 const router = createAsyncRouter();
 
@@ -20,12 +22,16 @@ router.post(
   createBookBorrowerController
 );
 router.get("", getAllBookBorrowersController);
-router.get("/:id", getBookBorrowerByIdController);
+router.get("/overdue", getAllOverdueBorrowingsController);
+
+router.get("/:borrowerId", getBookBorrowerByIdController);
 router.put(
   "/:id",
   validateRequest(updateBookBorrowerSchema),
   updateBookBorrowerController
 );
+
+router.put("/return-book/:id", returnBookController);
 router.delete("/:id", deleteBookBorrowerController);
 
 export default router;

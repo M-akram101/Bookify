@@ -6,8 +6,10 @@ export const createBookBorrower = async (bookBorrowerDto: BookBorrowerDto) => {
   try {
     const bookBorrower = await prisma.bookBorrower.create({
       data: {
-        name: bookBorrowerDto.name,
-        email: bookBorrowerDto.email,
+        bookId: bookBorrowerDto.bookId,
+        borrowerId: bookBorrowerDto.borrowerId,
+        dueDate: bookBorrowerDto.dueDate,
+        status: bookBorrowerDto.status,
       },
     });
     return bookBorrower;
@@ -31,14 +33,46 @@ export const getAllBookBorrowers = async () => {
     throw error;
   }
 };
-
-export const getBookBorrowerById = async (id: number) => {
+export const getAllOverdueBorrowings = async () => {
   try {
-    return await prisma.bookBorrower.findUnique({
-      where: { id, isDeleted: false },
+    return await prisma.bookBorrower.findMany({
+      where: {
+        dueDate: { lt: new Date() },
+        status: { not: "RETURNED" },
+        isDeleted: false,
+      },
+      // include: {
+      //   book: true,
+      //   borrower: true,
+      // },
     });
   } catch (err: any) {
-    const error: ApiError = { ...err, message: `Failed to get a bookBorrower` };
+    const error: ApiError = {
+      ...err,
+      message: `Failed to get bookBorrower; ${err.message}`,
+    };
+    throw error;
+  }
+};
+
+export const getBorrowingsByBorrowerId = async (borrowerId: number) => {
+  try {
+    return await prisma.bookBorrower.findMany({
+      where: {
+        borrowerId,
+        isDeleted: false,
+        status: { not: "RETURNED" },
+      },
+      // include: {
+      //   book: true,
+      //   borrower: true,
+      // },
+    });
+  } catch (err: any) {
+    const error: ApiError = {
+      ...err,
+      message: `Failed to get active book borrow records`,
+    };
     throw error;
   }
 };
@@ -51,8 +85,11 @@ export const updateBookBorrower = async (
     const bookBorrower = await prisma.bookBorrower.update({
       where: { id: id, isDeleted: false },
       data: {
-        name: bookBorrowerDto.name,
-        email: bookBorrowerDto.email,
+        bookId: bookBorrowerDto.bookId,
+        borrowerId: bookBorrowerDto.borrowerId,
+        dueDate: bookBorrowerDto.dueDate,
+        dateReturned: bookBorrowerDto.dateReturned,
+        status: bookBorrowerDto.status,
       },
     });
     return bookBorrower;
@@ -60,6 +97,25 @@ export const updateBookBorrower = async (
     const error: ApiError = {
       ...err,
       message: `Failed to update bookBorrower`,
+    };
+    throw error;
+  }
+};
+
+export const returnBook = async (id: number) => {
+  try {
+    const bookBorrower = await prisma.bookBorrower.update({
+      where: { id }, // only unique constraint
+      data: {
+        dateReturned: new Date(),
+        status: "RETURNED",
+      },
+    });
+    return bookBorrower;
+  } catch (err: any) {
+    const error: ApiError = {
+      ...err,
+      message: `Failed to return book`,
     };
     throw error;
   }

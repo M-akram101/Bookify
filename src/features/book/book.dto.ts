@@ -23,7 +23,7 @@ export const updateBookSchema = Joi.object<BookDto>({
   title: Joi.string().required(),
   author: Joi.string().required(),
   isbn: Joi.string().required(),
-  totalQuantity: Joi.string().required(),
-  availableQuantity: Joi.string().required(),
+  totalQuantity: Joi.number().required(),
+  availableQuantity: Joi.number().required(),
   shelfLocation: Joi.string().required(),
 });
